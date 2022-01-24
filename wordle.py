@@ -34,6 +34,18 @@ MAX_GUESSES = 6
 WORD_LEN = 5
 
 
+def load_dict(path: str) -> List[str]:
+    """Load dictionary of words from file.
+    """
+    with open(path) as f:
+        text = f.read()
+
+    lines = text.splitlines()
+    lines = list(filter(lambda x: re.match('^[a-z]{5}$', x), lines))
+
+    return lines
+
+
 class WordList():
     """Manage dictionary of possible words.
     """
@@ -69,7 +81,7 @@ class WordleGame():
     round = 1
     guesses = []
 
-    def __init__(self, wordlist: WordList, target=None) -> None:
+    def __init__(self, wordlist: WordList=WordList(), target=None) -> None:
         self.wordlist = wordlist    
         self.state = np.empty(shape=(MAX_GUESSES, WORD_LEN), dtype=int)
         self.state.fill(EMPTY)
@@ -104,7 +116,7 @@ class WordleGame():
             elif c == "Y":
                 state = YELLOW
 
-            self.state[self.round, i] = state
+            self.state[self.round - 1, i] = state
 
         self.round += 1
 
@@ -141,6 +153,12 @@ class WordleGame():
         return output
 
 
+def valid_state(input: str) -> bool:
+    """Return if string representation of state is valid.
+    """
+    return bool(re.match('^[GYB]{5}$', input))
+
+
 def generate_state(target, word):
     """Generate state of guess.
 
@@ -164,14 +182,3 @@ def generate_state(target, word):
         target_counter[char] -= 1
     return state
 
-
-def load_dict(path: str) -> List[str]:
-    """Load dictionary of words from file.
-    """
-    with open(path) as f:
-        text = f.read()
-
-    lines = text.splitlines()
-    lines = list(filter(lambda x: re.match('^[a-z]{5}$', x), lines))
-
-    return lines

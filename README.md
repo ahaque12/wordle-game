@@ -10,4 +10,25 @@
 
 ### Playing the game
 
+There are two modes: assistant and play (WIP).
+
+```bash
+$ python3 main.py assistant random
+Enter guess (enter empty string for no more guesses):raise
+Enter response:BBBBG
+Enter guess (enter empty string for no more guesses):belle
+Enter response:BYYBG
+Enter guess (enter empty string for no more guesses):clone
+Enter response:BGBBG
+Enter guess (enter empty string for no more guesses):
+Best guess is elude
+Enter response:YGGBG
+Enter guess (enter empty string for no more guesses):fluke
+Enter response:GGGBG
+Enter guess (enter empty string for no more guesses):
+Best guess is flume
+Enter response:GGGBG
+You exceeded the maximum guesses and lost :(.
+```
+
 ### Solver assistant

@@ -15,7 +15,7 @@ class BaseSolver():
     word_list = None
     first_guess = "raise"
 
-    def guess(self):
+    def guess(self, game: wordle.WordleGame):
         raise NotImplementedError("Not implemented!")
 
     def simulate_game(self, game) -> int:
@@ -46,11 +46,11 @@ class RandomSolver(BaseSolver):
     """Naive solution.
     """
 
-    def __init__(self, word_list):
+    def __init__(self, word_list=wordle.WordList()):
         self.word_list = word_list
         self.guess_list = word_list.answers
 
-    def guess(self, game):
+    def guess(self, game: wordle.WordleGame):
         if game.round == 1:
             return self.first_guess
 
