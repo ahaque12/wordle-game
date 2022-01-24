@@ -166,7 +166,9 @@ def generate_state(target, word):
     --------
     >>> np.all(generate_state("raise", "paire") == np.array([GREY, GREEN, GREEN, YELLOW, GREEN]))
     True
-    >>> np.all(generate_state("boils", "loops") == np.array([GREY, GREEN, GREY, YELLOW, GREEN]))
+    >>> np.all(generate_state("boils", "loops") == np.array([YELLOW, GREEN, GREY, GREY, GREEN]))
+    True
+    >>> np.all(generate_state("flute", "belle") == np.array([GREY, GREY, YELLOW, GREY, GREEN]))
     True
     """
     target_counter = Counter(target)
@@ -174,6 +176,11 @@ def generate_state(target, word):
     for i, char in enumerate(word):
         if char == target[i]:
             state[i] = GREEN
+            target_counter[char] -= 1
+
+    for i, char in enumerate(word):
+        if char == target[i]:
+            continue
         elif target_counter[char] > 0:
             state[i] = YELLOW
         else:
