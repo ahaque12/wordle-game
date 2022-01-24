@@ -124,11 +124,11 @@ class WordleGame():
     def complete(self) -> int:
         """Determine if game is complete.
         """
-        if self.round > MAX_GUESSES:
-            return LOSE
-        
         if np.all(self.state[self.round - 2, :] == GREEN):
             return WIN
+
+        if self.round > MAX_GUESSES:
+            return LOSE
 
         return IN_PROGRESS 
 

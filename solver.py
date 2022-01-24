@@ -6,6 +6,7 @@ from collections import Counter
 
 import wordle
 import numpy as np
+from tqdm import tqdm
 
 
 class BaseSolver():
@@ -28,19 +29,21 @@ class BaseSolver():
             game.guess(guess)
             round += 1
 
+        # Number of rounds is -1 if you lose.
+        if game.complete() != wordle.WIN:
+            round = -1
+
         return round
 
-    def simulate(self, game) -> List[int]:
+    def simulate(self) -> List[int]:
         """Simulate game and return distribution of wins.
         """
-        round = game.round - 1
 
-        while game.complete() == wordle.IN_PROGRESS:
-            guess = self.guess(game)
-            game.guess(guess)
-            round += 1
+        results = []
+        for word in tqdm(self.word_list.answers):
+            results.append(self.simulate_game(wordle.WordleGame(wordlist=self.word_list, target=word)))
 
-        return round
+        return np.array(results)
 
 
 def filter_answers(game):
@@ -57,7 +60,6 @@ def filter_answers(game):
             letter = game.guesses[i][j]
             state = game.state[i, j]
             if state == wordle.GREEN:
-                print(j, letter)
                 guess_list = filter(lambda word: letter == word[j], guess_list)
             guess_list = list(guess_list)
 
