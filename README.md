@@ -10,8 +10,9 @@
 
 ### Playing the game
 
-There are two modes: assistant and play (WIP).
+There are two modes: assistant and play.
 
+#### Assistant
 ```bash
 $ python3 main.py assistant random
 Enter guess (enter empty string for no more guesses):raise
@@ -29,6 +30,23 @@ Enter guess (enter empty string for no more guesses):
 Best guess is flume
 Enter response:GGGBG
 You exceeded the maximum guesses and lost :(.
+```
+
+#### Play
+```bash
+$ python3 main.py assistant play
+python3 main.py play
+Game state:
+
+Enter guess:raise
+Game state:
+YBBBB
+
+Enter guess:spout
+Game state:
+YBBBB
+BBYBB
+
 ```
 
 ### Solver assistant

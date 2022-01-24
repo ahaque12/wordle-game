@@ -7,6 +7,23 @@ import wordle
 import solver
 
 
+def play(args):
+    game = wordle.WordleGame()
+
+    while True:
+        print("Game state:")
+        print(game)
+        guess = input("Enter guess:")
+        game.guess(guess)
+        complete = game.complete()
+        if complete == wordle.WIN:
+            print("You won!")
+            break
+        elif complete == wordle.LOSE:
+            print("You exceeded the maximum guesses and lost :(.")
+            break
+
+
 def assistant(args):
     """Assist Wordle gameplay.
     """
@@ -15,10 +32,15 @@ def assistant(args):
         solve = solver.RandomSolver()
 
     while True:
-        guess = input("Enter guess (enter empty string for no more guesses):")
+        guess = input("Enter guess (enter empty string for no more guesses, list to see remaining valid answers):")
         if guess.strip() == "":
             guess = solve.guess(game)
             print("Best guess is", guess)
+        elif guess == "list":
+            guess_list = solver.filter_answers(game)
+            print("List of potential answers:")
+            print(guess_list)
+            continue
 
         response = input("Enter response:")
         while not wordle.valid_state(response):
@@ -37,6 +59,9 @@ def assistant(args):
 def main():
     parser = argparse.ArgumentParser("Play Wordle.")
     subparsers = parser.add_subparsers(help='Sub-command help.')
+
+    parser_assistant = subparsers.add_parser('play', help='Play game')
+    parser_assistant.set_defaults(func=play)
 
     parser_assistant = subparsers.add_parser('assistant', help='Use assistant')
     parser_assistant.add_argument('solver', choices=['random'], help='Solver to use')
