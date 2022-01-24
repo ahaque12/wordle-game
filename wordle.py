@@ -1,4 +1,4 @@
-""" Play wordle.
+""" Implement Wordle game.
 
 __version__ = '0.1'
 __author__ = 'Adnan Haque'
@@ -73,6 +73,8 @@ class WordleGame():
         self.wordlist = wordlist    
         self.state = np.empty(shape=(MAX_GUESSES, WORD_LEN), dtype=int)
         self.state.fill(EMPTY)
+        self.guesses = []
+        round = 1
 
         if target is None:
             self.target = wordlist.random_target()
@@ -87,6 +89,25 @@ class WordleGame():
         self.state[self.round - 1, :] = generate_state(self.target, word)
         self.round += 1
         self.guesses.append(word)
+
+    def add_state(self, guess, state_str: str) -> None:
+        """Update game with current state, designed for external play.
+        """
+        self.guesses.append(guess)
+
+        for i, c in enumerate(state_str):
+            state = EMPTY
+            if c == "B":
+                state = GREY
+            elif c == "G":
+                state = GREEN
+            elif c == "Y":
+                state = YELLOW
+
+            self.state[self.round, i] = state
+
+        self.round += 1
+
 
     def complete(self) -> int:
         """Determine if game is complete.
