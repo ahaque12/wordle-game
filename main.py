@@ -64,7 +64,8 @@ def main():
     parser_assistant.set_defaults(func=play)
 
     parser_assistant = subparsers.add_parser('assistant', help='Use assistant')
-    parser_assistant.add_argument('solver', choices=['random'], help='Solver to use')
+    parser_assistant.add_argument('--solver', choices=['random'], default='random',
+                                  help='Solver to use')
     parser_assistant.set_defaults(func=assistant)
 
     args = parser.parse_args()
