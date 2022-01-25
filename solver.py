@@ -69,13 +69,14 @@ def filter_answers(game):
             state = game.state[i, j]
 
             # Handle edge case of multiple of the same letter below.
-            if letter_dist[letter] > 1 or state == wordle.GREEN:
+            if state == wordle.GREEN:
                 continue
 
-            if state == wordle.GREY:
+            if state == wordle.GREY and letter_dist[letter] <= 1:
                 guess_list = filter(lambda word: letter not in word, guess_list)
             elif state == wordle.YELLOW:
                 guess_list = filter(lambda word: letter in word, guess_list)
+                guess_list = filter(lambda word: letter != word[j], guess_list)
             guess_list = list(guess_list)
 
         # Handle edge case of multiple of the same letter.
