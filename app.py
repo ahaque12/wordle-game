@@ -6,6 +6,7 @@ import streamlit as st
 
 import numpy as np
 import wordle
+import solver
 
 color_map = {2: 'green', 1: 'yellow', 0: 'grey'}
 css = """
@@ -60,20 +61,37 @@ st.markdown("""
 
 if 'game' not in st.session_state:
     game = wordle.WordleGame()
+    solve = solver.RandomSolver(game.wordlist)
     st.session_state['game'] = game
+    st.session_state['solve'] = solve
 else:
     game = st.session_state['game']
+    solve = st.session_state['solve']
+
 
 st.sidebar.markdown("## Select Solver")
 
-#-- Set time by GPS or event
+button = st.sidebar.button('Reset game')
 select_event = st.sidebar.selectbox('How do you want to solve the Wordle?',
                                     ['Random'])
+show_answers = st.sidebar.checkbox('Display words')
+
+if button:
+    wordlist = game.wordlist
+    game = wordle.WordleGame(wordlist)
+    st.session_state['game'] = game
 
 with st.form("guess_form"):
     guess = st.text_input('Guess')
     # Every form must have a submit button.
     submitted = st.form_submit_button("ENTER")
-    game.guess(guess)
+    if submitted:
+        game.guess(guess)
 
 st.write(state_repr(game) + css, unsafe_allow_html=True)
+
+st.sidebar.write("Best guess: " + solve.guess(game))
+guess_list = solver.filter_answers(game)
+st.sidebar.write("Number of acceptable answers remaining: " + str(len(guess_list)))
+if show_answers:
+    st.sidebar.write(guess_list)

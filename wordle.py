@@ -86,7 +86,7 @@ class WordleGame():
         self.state = np.empty(shape=(MAX_GUESSES, WORD_LEN), dtype=int)
         self.state.fill(EMPTY)
         self.guesses = []
-        round = 1
+        self.round = 1
 
         if target is None:
             self.target = wordlist.random_target()
