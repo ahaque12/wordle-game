@@ -1,3 +1,6 @@
+# cython: linetrace=True
+# distutils: define_macros=CYTHON_TRACE_NOGIL=1
+
 from wordle import GREEN, YELLOW, GREY, WORD_LEN
 import numpy as np
 
@@ -17,10 +20,14 @@ cpdef generate_state(str target, str word):
     True
     """
     cdef int target_counter[26]
+    cdef int state[5]
     cdef int i
     cdef char c
 
-    state = np.empty(WORD_LEN, dtype=int)
+    # state=np.empty(WORD_LEN, dtype=int)
+    for i in range(26):
+        target_counter[i] = 0
+
     for i in range(WORD_LEN):
         target_counter[map_char(ord(target[i]))] += 1
         if word[i] == target[i]:
@@ -37,4 +44,10 @@ cpdef generate_state(str target, str word):
             state[i] = GREY
             continue
         target_counter[map_char(c)] -= 1
-    return state
+
+    return state[0]+state[1]*3+state[2]*9+state[3]*27+state[4]*81
+
+
+if __name__ == "__main__":
+    for i in range(100000):
+        generate_state("raise", "paire")
