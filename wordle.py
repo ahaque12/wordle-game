@@ -57,8 +57,14 @@ class WordList():
         self.acceptable_guesses = load_dict(GUESS_PATH)
         self.answers = load_dict(ANSWERS_PATH)
 
-    def lookup_word(self, partial_string: str) -> List[str]:
-        pass
+        self.acceptable_guesses = self.acceptable_guesses + self.answers
+
+    def word_index(self, lookup: str) -> int:
+        for i, word in enumerate(self.acceptable_guesses):
+            if word == lookup:
+                return i
+
+        return -1
 
     def random_guess(self):
         return self.acceptable_guesses[np.random.randint(len(self.answers))]

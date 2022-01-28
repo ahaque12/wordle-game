@@ -29,7 +29,9 @@ def assistant(args):
     """
     game = wordle.WordleGame()
     if args.solver == 'random':
-        solve = solver.RandomSolver()
+        solve = solver.RandomSolver(game.wordlist)
+    elif args.solver == 'maxentropy':
+        solve = solver.MaxEntropy(game.wordlist)
 
     while True:
         guess = input("Enter guess (enter empty string for no more guesses, list to see remaining valid answers):")
@@ -64,7 +66,7 @@ def main():
     parser_assistant.set_defaults(func=play)
 
     parser_assistant = subparsers.add_parser('assistant', help='Use assistant')
-    parser_assistant.add_argument('--solver', choices=['random'], default='random',
+    parser_assistant.add_argument('--solver', choices=['random', 'maxentropy'], default='random',
                                   help='Solver to use')
     parser_assistant.set_defaults(func=assistant)
 

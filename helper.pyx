@@ -48,6 +48,35 @@ cpdef generate_state(str target, str word):
     return state[0]+state[1]*3+state[2]*9+state[3]*27+state[4]*81
 
 
+cpdef calculate_counts(state_space: np.ndarray, filter_mat=None):
+
+    cdef int i
+    cdef int j
+    cdef int answer_len
+    cdef int guess_len
+
+    answer_len, guess_len = state_space.shape
+
+    if filter_mat is None:
+        filter_mat = np.ones(answer_len, dtype=int)
+
+    counts = np.zeros((guess_len, 3**5), dtype=int)
+
+    for i in range(answer_len):
+        for j in range(guess_len):
+            if filter_mat[i] == 0:
+                break
+            counts[j, state_space[i, j]] += 1
+
+    return counts
+
+
+cpdef calc_entropy(counts: np.ndarray):
+    px = counts / (.001 + counts.sum(axis=1).reshape(-1, 1))
+    entropy = np.sum(px*np.log2(px + .001), axis=1)
+    return entropy
+
+
 if __name__ == "__main__":
     for i in range(100000):
         generate_state("raise", "paire")
