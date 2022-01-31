@@ -152,7 +152,7 @@ class MaxEntropy(BaseSolver):
             return self.first_guess
 
         answers = filter_answers(game)
-        if len(answers) == 1:
+        if len(answers) <= 2:
             return answers[0]
         elif len(answers) == 0:
             raise ValueError("No valid guesses left!")

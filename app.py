@@ -26,9 +26,13 @@ white {
 </style>
 """ 
 
+solver_type = None
+solve = None
+
 
 def get_html(type, str_):
     return """<%(type)s>%(str)s</%(type)s>""" % {'type': type, 'str': str_ }
+
 
 def state_repr(game):
     def map_int(x):
@@ -44,12 +48,26 @@ def state_repr(game):
     N = len(game.guesses)
     for i in range(N):
         for j in range(M):
-            output += get_html(map_int(game.state[i, j]), game.guesses[i][j])
+            output += get_html(map_int(game.state[i, j]), game.guesses[i][j].upper())
         output += "<br>"
     return output
 
+
+def update_solver():
+    global solve
+
+    if solver_type == "Random":
+        solve = solver.RandomSolver(game.wordlist)
+    elif solver_type == "Max Entropy": 
+        solve = solver.MaxEntropy(game.wordlist)
+
 # -- Set page config
-apptitle = 'Wordle'
+st.set_page_config(
+   page_title="Wordle",
+   page_icon=":thought_balloon:",
+   layout="wide",
+   initial_sidebar_state="expanded",
+)
 
 # Title the app
 st.title('Wordle Game with Solver')
@@ -59,22 +77,24 @@ st.markdown("""
  * You can use the solver on the left
 """)
 
+st.sidebar.markdown("## Select Solver")
+
+button = st.sidebar.button('Reset game')
+solver_type = st.sidebar.radio('How do you want to solve the Wordle?',
+                               ['Random', 'Max Entropy'],
+                               index=1,
+                               on_change=update_solver
+                               )
+show_answers = st.sidebar.checkbox('Display words')
+
 if 'game' not in st.session_state:
     game = wordle.WordleGame()
-    solve = solver.RandomSolver(game.wordlist)
+    update_solver()
     st.session_state['game'] = game
     st.session_state['solve'] = solve
 else:
     game = st.session_state['game']
     solve = st.session_state['solve']
-
-
-st.sidebar.markdown("## Select Solver")
-
-button = st.sidebar.button('Reset game')
-select_event = st.sidebar.selectbox('How do you want to solve the Wordle?',
-                                    ['Random'])
-show_answers = st.sidebar.checkbox('Display words')
 
 if button:
     wordlist = game.wordlist
