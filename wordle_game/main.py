@@ -3,8 +3,7 @@
 
 import argparse
 
-import wordle
-import solver
+from wordle_game import wordle, solver
 
 
 def play(args):
