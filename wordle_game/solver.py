@@ -6,13 +6,12 @@ from collections import Counter
 import os.path
 from pathlib import Path
 
-import wordle
+from wordle_game import wordle
 import wordle_game
-import wordle_game.helper
 import numpy as np
 from tqdm import tqdm
 
-STATE_PATH = os.path.join(Path(__file__).parent, 'data/', 'state_space.npy')
+STATE_PATH = os.path.join(Path(__file__).parent, '..', 'data/', 'state_space.npy')
 
 class BaseSolver():
     """Base Wordle solver.

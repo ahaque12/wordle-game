@@ -25,7 +25,8 @@ setup(
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.6',
-    package_dir={'': 'wordle_game'},
+    packages=['wordle_game'],
+    package_dir={'wordle_game': 'wordle_game'},
     data_files=[('data', ['wordle_game/data/wordle-allowed-guesses.txt',
                           'wordle_game/data/wordle-answers-alphabetical.txt'])],
     entry_points={
@@ -33,5 +34,5 @@ setup(
             'wordle_game=wordle_game:main',
         ],
     },
-    ext_modules=cythonize('wordle_game/helper.pyx')
+    ext_modules=cythonize('wordle_game/helper.pyx'),
 )
