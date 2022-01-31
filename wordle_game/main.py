@@ -47,6 +47,9 @@ def assistant(args):
             print("List of potential answers:")
             print(guess_list)
             continue
+        elif not game.wordlist.valid_guess(guess):
+            print("Guess is not valid!")
+            continue
 
         response = input("Enter response:")
         while not wordle.valid_state(response):
