@@ -1,7 +1,7 @@
 # cython: linetrace=True
 # distutils: define_macros=CYTHON_TRACE_NOGIL=1
 
-from wordle import GREEN, YELLOW, GREY, WORD_LEN
+from wordle_game.wordle import GREEN, YELLOW, GREY, WORD_LEN
 import numpy as np
 
 cdef map_char(char x):

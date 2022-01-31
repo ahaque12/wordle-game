@@ -3,8 +3,7 @@
 
 import argparse
 
-import wordle
-import solver
+from wordle_game import wordle, solver
 
 
 def play(args):
@@ -40,6 +39,7 @@ def assistant(args):
     while True:
         guess = input("Enter guess (enter empty string for no more guesses, list to see remaining valid answers):")
         if guess.strip() == "":
+            guess = solve.guess(game)
             print("Best guess is", guess)
             continue
         elif guess == "list":
@@ -64,6 +64,7 @@ def assistant(args):
 
 def main():
     parser = argparse.ArgumentParser("Play Wordle.")
+    parser.set_defaults(func=lambda args: parser.print_help())
     subparsers = parser.add_subparsers(help='Sub-command help.')
 
     parser_assistant = subparsers.add_parser('play', help='Play game')
