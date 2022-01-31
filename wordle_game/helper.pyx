@@ -70,17 +70,14 @@ cpdef generate_state(str target, str word):
     return state[0]+state[1]*3+state[2]*9+state[3]*27+state[4]*81
 
 
-cpdef calculate_counts(np.ndarray state_space, np.ndarray filter_mat=None):
+cpdef calculate_counts(np.ndarray[DTYPE_t, ndim=2] state_space, np.ndarray[DTYPE_t, ndim=1] filter_mat):
 
     cdef int i
     cdef int j
     cdef int answer_len = state_space.shape[0]
     cdef int guess_len = state_space.shape[1]
 
-    if filter_mat is None:
-        filter_mat = np.ones(answer_len, dtype=DTYPE)
-
-    counts = np.zeros([guess_len, 3**5], dtype=DTYPE)
+    cdef np.ndarray[DTYPE_t, ndim=2] counts = np.zeros([guess_len, 3**5], dtype=DTYPE)
 
     for i in range(answer_len):
         if filter_mat[i] == 0:
