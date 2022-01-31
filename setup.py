@@ -31,7 +31,7 @@ setup(
                           'wordle_game/data/wordle-answers-alphabetical.txt'])],
     entry_points={
         'console_scripts': [
-            'wordle_game=wordle_game.__main__:main',
+            'wordle_game=wordle_game.main:main',
             'wordle_app=wordle_game:app',
         ],
     },

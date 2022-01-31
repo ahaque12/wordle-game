@@ -64,6 +64,7 @@ def assistant(args):
 
 def main():
     parser = argparse.ArgumentParser("Play Wordle.")
+    parser.set_defaults(func=lambda args: parser.print_help())
     subparsers = parser.add_subparsers(help='Sub-command help.')
 
     parser_assistant = subparsers.add_parser('play', help='Play game')

@@ -1,4 +1,5 @@
 data/
+wordle_game/helper.c
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
