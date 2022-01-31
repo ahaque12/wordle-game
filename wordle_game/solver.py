@@ -6,8 +6,7 @@ from collections import Counter
 import os.path
 from pathlib import Path
 
-from wordle_game import wordle
-import wordle_game
+from wordle_game import wordle, helper
 import numpy as np
 from tqdm import tqdm
 
@@ -132,7 +131,7 @@ class MaxEntropy(BaseSolver):
 
         for i, target in enumerate(self.wordlist.answers):
             for j, guess in enumerate(self.wordlist.acceptable_guesses):
-                state_space[i, j] = wordle_game.helper.generate_state(target, guess)
+                state_space[i, j] = helper.generate_state(target, guess)
         
         np.save(STATE_PATH, state_space)
         return state_space
@@ -165,9 +164,9 @@ class MaxEntropy(BaseSolver):
             guess_num = self.wordlist.word_index(guess)
             filter_mat[self.state_space[:, guess_num] != state] = 0
     
-        counts = wordle_game.helper.calculate_counts(self.state_space, filter_mat)
+        counts = helper.calculate_counts(self.state_space, filter_mat)
 
-        entropy = wordle_game.helper.calc_entropy(counts)
+        entropy = helper.calc_entropy(counts)
     
         guess_num = np.argmin(entropy)
         guess = self.wordlist.acceptable_guesses[guess_num]

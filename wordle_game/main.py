@@ -39,6 +39,7 @@ def assistant(args):
     while True:
         guess = input("Enter guess (enter empty string for no more guesses, list to see remaining valid answers):")
         if guess.strip() == "":
+            guess = solve.guess(game)
             print("Best guess is", guess)
             continue
         elif guess == "list":

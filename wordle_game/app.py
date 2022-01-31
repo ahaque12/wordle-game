@@ -5,8 +5,7 @@ Inspired by https://github.com/sejaldua/wordle-analysis.
 import streamlit as st
 
 import numpy as np
-import wordle
-import solver
+from wordle_game import wordle, solver
 
 color_map = {2: 'green', 1: 'yellow', 0: 'grey'}
 css = """
