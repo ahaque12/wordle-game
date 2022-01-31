@@ -4,6 +4,28 @@
 from wordle_game.wordle import GREEN, YELLOW, GREY, WORD_LEN
 import numpy as np
 
+# "cimport" is used to import special compile-time information
+# about the numpy module (this is stored in a file numpy.pxd which is
+# currently part of the Cython distribution).
+cimport numpy as np
+
+# It's necessary to call "import_array" if you use any part of the
+# numpy PyArray_* API. From Cython 3, accessing attributes like
+# ".shape" on a typed Numpy array use this API. Therefore we recommend
+# always calling "import_array" whenever you "cimport numpy"
+np.import_array()
+
+# We now need to fix a datatype for our arrays. I've used the variable
+# DTYPE for this, which is assigned to the usual NumPy runtime
+# type info object.
+DTYPE = np.int
+
+# "ctypedef" assigns a corresponding compile-time type to DTYPE_t. For
+# every type in the numpy module there's a corresponding compile-time
+# type with a _t-suffix.
+ctypedef np.int_t DTYPE_t
+
+
 cdef map_char(char x):
     return x - 97
 
@@ -48,19 +70,17 @@ cpdef generate_state(str target, str word):
     return state[0]+state[1]*3+state[2]*9+state[3]*27+state[4]*81
 
 
-cpdef calculate_counts(state_space: np.ndarray, filter_mat=None):
+cpdef calculate_counts(np.ndarray state_space, np.ndarray filter_mat=None):
 
     cdef int i
     cdef int j
-    cdef int answer_len
-    cdef int guess_len
-
-    answer_len, guess_len = state_space.shape
+    cdef int answer_len = state_space.shape[0]
+    cdef int guess_len = state_space.shape[1]
 
     if filter_mat is None:
-        filter_mat = np.ones(answer_len, dtype=int)
+        filter_mat = np.ones(answer_len, dtype=DTYPE)
 
-    counts = np.zeros((guess_len, 3**5), dtype=int)
+    counts = np.zeros([guess_len, 3**5], dtype=DTYPE)
 
     for i in range(answer_len):
         if filter_mat[i] == 0:
