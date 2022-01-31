@@ -1,6 +1,8 @@
 from setuptools import setup
 from Cython.Build import cythonize
 
+import numpy as np
+
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
@@ -32,8 +34,9 @@ setup(
     entry_points={
         'console_scripts': [
             'wordle_game=wordle_game.main:main',
-            'wordle_app=wordle_game:app',
+            'wordle_app=wordle_game.app_wrapper:main',
         ],
     },
     ext_modules=cythonize('wordle_game/helper.pyx'),
+    include_dirs=[np.get_include()],
 )
