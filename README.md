@@ -59,3 +59,6 @@ BBYBB
 ```bash
 $ streamlit run app.py
 ```
+![image](https://user-images.githubusercontent.com/6743515/151739921-1a1b451b-b550-4db7-b9ea-ca020f2ec301.png)
+![image](https://user-images.githubusercontent.com/6743515/151740056-30afdfce-4e57-4bbc-8c5d-82fc496cd3e5.png)
+
