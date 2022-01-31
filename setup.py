@@ -34,7 +34,7 @@ setup(
     entry_points={
         'console_scripts': [
             'wordle_game=wordle_game.main:main',
-            'wordle_app=wordle_game:app',
+            'wordle_app=wordle_game.app_wrapper:main',
         ],
     },
     ext_modules=cythonize('wordle_game/helper.pyx'),

@@ -16,11 +16,6 @@ or
 $ pip install -e .
 ```
 
-You can build cython libraries and run within source:
-```bash
-$ python setup.py build_ext --inplace
-```
-
 ## Playing the game
 
 ### CLI
@@ -28,7 +23,7 @@ There are two modes: assistant and play.
 
 #### Assistant
 ```bash
-$ python3 main.py assistant random
+$ wordle_game assistant --solver random
 Enter guess (enter empty string for no more guesses):raise
 Enter response:BBBBG
 Enter guess (enter empty string for no more guesses):belle
@@ -37,18 +32,20 @@ Enter guess (enter empty string for no more guesses):clone
 Enter response:BGBBG
 Enter guess (enter empty string for no more guesses):
 Best guess is elude
+Enter guess (enter empty string for no more guesses):
 Enter response:YGGBG
 Enter guess (enter empty string for no more guesses):fluke
 Enter response:GGGBG
 Enter guess (enter empty string for no more guesses):
 Best guess is flume
+Enter guess (enter empty string for no more guesses):
 Enter response:GGGBG
 You exceeded the maximum guesses and lost :(.
 ```
 
 #### Play
 ```bash
-$ python3 main.py assistant play
+$ wordle_game assistant play
 python3 main.py play
 Game state:
 
@@ -66,8 +63,7 @@ BBYBB
 ### Streamlit
 
 ```bash
-$ streamlit run app.py
+$ wordle_app streamlit
 ```
 ![image](https://user-images.githubusercontent.com/6743515/151739921-1a1b451b-b550-4db7-b9ea-ca020f2ec301.png)
 ![image](https://user-images.githubusercontent.com/6743515/151740056-30afdfce-4e57-4bbc-8c5d-82fc496cd3e5.png)
-
