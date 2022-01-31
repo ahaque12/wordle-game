@@ -63,9 +63,9 @@ cpdef calculate_counts(state_space: np.ndarray, filter_mat=None):
     counts = np.zeros((guess_len, 3**5), dtype=int)
 
     for i in range(answer_len):
+        if filter_mat[i] == 0:
+            continue
         for j in range(guess_len):
-            if filter_mat[i] == 0:
-                break
             counts[j, state_space[i, j]] += 1
 
     return counts

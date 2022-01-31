@@ -68,9 +68,7 @@ class WordList():
         # Handle if word is not in list
         if self.acceptable_guesses[x] != lookup:
             x = -1
-        
         return x
-
 
     def random_guess(self):
         return self.acceptable_guesses[np.random.randint(len(self.answers))]
@@ -80,6 +78,9 @@ class WordList():
 
     def valid_guess(self, word) -> bool:
         if len(word) != WORD_LEN:
+            return False
+
+        if self.word_index(word) == -1:
             return False
 
         return True
@@ -93,8 +94,8 @@ class WordleGame():
     round = 1
     guesses = []
 
-    def __init__(self, wordlist: WordList=WordList(), target=None) -> None:
-        self.wordlist = wordlist    
+    def __init__(self, wordlist: WordList = WordList(), target=None) -> None:
+        self.wordlist = wordlist
         self.state = np.empty(shape=(MAX_GUESSES, WORD_LEN), dtype=int)
         self.state.fill(EMPTY)
         self.guesses = []
@@ -113,6 +114,7 @@ class WordleGame():
         self.state[self.round - 1, :] = generate_state(self.target, word)
         self.round += 1
         self.guesses.append(word)
+        return True
 
     def add_state(self, guess, state_str: str) -> None:
         """Update game with current state, designed for external play.
@@ -132,7 +134,6 @@ class WordleGame():
 
         self.round += 1
 
-
     def complete(self) -> int:
         """Determine if game is complete.
         """
@@ -146,21 +147,24 @@ class WordleGame():
 
     def __str__(self):
 
-        def transform_char(x: int) -> str:
+        def transform_char(x: int, input_string) -> str:
             if x == GREY:
-                return f"{Back.BLACK}{Fore.RED}B{Style.RESET_ALL}"
+                val = Back.BLACK + Fore.WHITE
             elif x == GREEN:
-                return f"{Fore.GREEN}G{Style.RESET_ALL}"
+                val = Back.GREEN + Fore.WHITE
             elif x == YELLOW:
-                return f"{Fore.YELLOW}Y{Style.RESET_ALL}"
+                val = Back.YELLOW + Fore.WHITE
             else:
-                return f"{Back.BLACK} {Style.RESET_ALL}"
+                val = Back.WHITE
+
+            val = val + input_string.upper() + Style.RESET_ALL
+            return val
 
         output = ""
-        N, M = self.state.shape
-        for i in range(N):
+        _, M = self.state.shape
+        for i in range(len(self.guesses)):
             for j in range(M):
-                output += transform_char(self.state[i, j])
+                output += transform_char(self.state[i, j], self.guesses[i][j])
             output += "\n"
         return output
 
@@ -200,4 +204,3 @@ def generate_state(target, word):
             continue
         target_counter[char] -= 1
     return state
-

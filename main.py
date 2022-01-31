@@ -14,6 +14,10 @@ def play(args):
         print("Game state:")
         print(game)
         guess = input("Enter guess:")
+        guess = guess.lower().strip()
+        if not game.wordlist.valid_guess(guess):
+            print("Not a valid guess!")
+            continue
         game.guess(guess)
         complete = game.complete()
         if complete == wordle.WIN:
@@ -36,8 +40,8 @@ def assistant(args):
     while True:
         guess = input("Enter guess (enter empty string for no more guesses, list to see remaining valid answers):")
         if guess.strip() == "":
-            guess = solve.guess(game)
             print("Best guess is", guess)
+            continue
         elif guess == "list":
             guess_list = solver.filter_answers(game)
             print("List of potential answers:")
