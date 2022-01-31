@@ -1,10 +1,15 @@
 from setuptools import setup
 from Cython.Build import cythonize
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
     name='wordle-game',
     version='0.1',
     description='Play and solve Wordle games.',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url='https://github.com/ahaque12/wordle-game',
     author='Adnan Haque',
     author_email='ahaque12@gmail.com',
@@ -14,13 +19,19 @@ setup(
         'Tracker': 'https://github.com/ahaque12/wordle-game/issues',
 
     },
-    python_requires='>=3',
-    data_files=[('data', ['data/wordle-allowed-guesses.txt',
-                                  'data/wordle-answers-alphabetical.txt'])],
+    classifiers=[
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+    ],
+    python_requires='>=3.6',
+    package_dir={'': 'wordle_game'},
+    data_files=[('data', ['wordle_game/data/wordle-allowed-guesses.txt',
+                          'wordle_game/data/wordle-answers-alphabetical.txt'])],
     entry_points={
         'console_scripts': [
             'wordle_game=wordle_game:main',
         ],
     },
-    ext_modules=cythonize('helper.pyx')
+    ext_modules=cythonize('wordle_game/helper.pyx')
 )
