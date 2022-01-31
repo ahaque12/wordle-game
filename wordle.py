@@ -8,6 +8,7 @@ from typing import List
 
 from colorama import Fore, Style, Back
 from pathlib import Path
+from bisect import bisect_left
 import os.path
 
 import re
@@ -57,14 +58,19 @@ class WordList():
         self.acceptable_guesses = load_dict(GUESS_PATH)
         self.answers = load_dict(ANSWERS_PATH)
 
-        self.acceptable_guesses = self.acceptable_guesses + self.answers
+        # Sort for bisection algorithm in future lookups. 
+        self.answers = sorted(self.answers)
+        self.acceptable_guesses = sorted(self.acceptable_guesses + self.answers)
 
     def word_index(self, lookup: str) -> int:
-        for i, word in enumerate(self.acceptable_guesses):
-            if word == lookup:
-                return i
+        x = bisect_left(self.acceptable_guesses, lookup)
 
-        return -1
+        # Handle if word is not in list
+        if self.acceptable_guesses[x] != lookup:
+            x = -1
+        
+        return x
+
 
     def random_guess(self):
         return self.acceptable_guesses[np.random.randint(len(self.answers))]
