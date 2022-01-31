@@ -1,0 +1,10 @@
+colorama==0.4.3
+coverage==6.2
+Cython==0.29.26
+entrypoints==0.3
+line-profiler==3.4.0
+numpy==1.21.2
+pytest==6.2.5
+pytest-cov==3.0.0
+streamlit==1.4.0
+tqdm==4.62.3
