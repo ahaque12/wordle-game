@@ -11,17 +11,29 @@ color_map = {2: 'green', 1: 'yellow', 0: 'grey'}
 css = """
 <style type='text/css'>
 green {
-    color: #00ff00;
+    color: #ffffff;
+    background-color: #6aaa64;
 }
 yellow {
-    color: #FFFF00;
+    color: #ffffff;
+    background-color: #c9b458;
 }
 grey {
-    color: #808080;
+    color: #ffffff;
+    background-color: #787c7e;
 }
 white {
-    color: #fff;
+    background-color: #ffffff;
 }
+green, yellow, grey {
+    border-style: solid;
+    border-color: #ffffff;
+    padding: 0.5em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+    display: inline-block;
+} 
 </style>
 """ 
 
