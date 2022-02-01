@@ -65,7 +65,7 @@ def assistant(args):
             break
 
 
-def main():
+def gen_parser():
     parser = argparse.ArgumentParser("Play Wordle.")
     parser.set_defaults(func=lambda args: parser.print_help())
     subparsers = parser.add_subparsers(help='Sub-command help.')
@@ -75,9 +75,13 @@ def main():
 
     parser_assistant = subparsers.add_parser('assistant', help='Use assistant')
     parser_assistant.add_argument('--solver', choices=['random', 'maxentropy'], default='random',
-                                  help='Solver to use')
+                                  help='Solver to use.')
     parser_assistant.set_defaults(func=assistant)
+    return parser
 
+
+def main():
+    parser = gen_parser()
     args = parser.parse_args()
     args.func(args)
 
