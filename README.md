@@ -1,8 +1,13 @@
 # Wordle Game
 
+### 😂 Here is a random joke that'll make you laugh!
+![Jokes Card](https://readme-jokes.vercel.app/api)
+
 ## Getting Started
 
 ### Dictionary
+
+Run the makefile `$ make` or download the dictionaries manually.
 
 1. Download the target word list at `https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/a9e55d7e0c08100ce62133a1fa0d9c4f0f542f2c/wordle-answers-alphabetical.txt` and place it in the `data/` folder.
 1. Download the acceptable guesses word list at `https://gist.githubusercontent.com/cfreshman/cdcdf777450c5b5301e439061d29694c/raw/de1df631b45492e0974f7affe266ec36fed736eb/wordle-allowed-guesses.txt` and place it in the `data/` folder.
@@ -65,5 +70,5 @@ BBYBB
 ```bash
 $ wordle_app streamlit
 ```
-![image](https://user-images.githubusercontent.com/6743515/151739921-1a1b451b-b550-4db7-b9ea-ca020f2ec301.png)
-![image](https://user-images.githubusercontent.com/6743515/151740056-30afdfce-4e57-4bbc-8c5d-82fc496cd3e5.png)
+![image](https://user-images.githubusercontent.com/6743515/151911458-4225efcd-cfd0-4044-bd58-352249fd4b96.png)
+
