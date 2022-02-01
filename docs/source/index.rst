@@ -7,11 +7,18 @@ Welcome to wordle-game's documentation!
 =======================================
 
 
-Contents
---------
+Guide
+-----
+.. toctree::
+   
+   cli
+
+Modules
+-------
 .. toctree::
 
-   api
+   wordle
+   solver
 
 
 Indices and tables
