@@ -49,6 +49,17 @@ def load_dict(path: str) -> List[str]:
 
 class WordList():
     """Manage dictionary of possible words.
+
+    Dictionary of acceptable guesses and potential answers
+    are both managed within this class. 
+
+    Attributes
+    ----------
+    acceptable_guesses : List[str]
+        List of acceptable guesses in alphabetical order.
+
+    answers : List[str]
+        List of potential answers in alphabetical order.
     """
 
     acceptable_guesses = []
@@ -63,6 +74,8 @@ class WordList():
         self.acceptable_guesses = sorted(self.acceptable_guesses + self.answers)
 
     def word_index(self, lookup: str) -> int:
+        """Lookup index of word in acceptable guesses.
+        """
         x = bisect_left(self.acceptable_guesses, lookup)
 
         # Handle if word is not in list
@@ -70,13 +83,9 @@ class WordList():
             x = -1
         return x
 
-    def random_guess(self):
-        return self.acceptable_guesses[np.random.randint(len(self.answers))]
-
-    def random_target(self):
-        return self.answers[np.random.randint(len(self.answers))]
-
     def valid_guess(self, word) -> bool:
+        """Assess whether or not a guess is acceptable.
+        """
         if len(word) != WORD_LEN:
             return False
 
@@ -87,6 +96,34 @@ class WordList():
 
 
 class WordleGame():
+    """Play Wordle game.
+
+    Implementation of mechanics of Wordle game.
+
+    Parameters
+    ----------
+    wordlist : WordList, optional (default=WordList())
+        Acceptable answers and guesses.
+
+    target : str or None, optional (default=None)
+        Target word, if unspecified will be instantiated randomly.
+
+    Attributes
+    ----------
+    wordlist : WordList
+        Acceptable answers and guesses.
+
+    state : np.ndarray
+        Array reflecting current game state. Each row is a guess
+        and each column reflects whether or not the letter is 
+        grey, yellow, or green.
+
+    guesses : List[str]
+        List of guesses throughout the gameplay.
+
+    round : int
+        Current round of the game. The initial round is 1.
+    """
 
     state = None
     wordlist = None
@@ -107,6 +144,8 @@ class WordleGame():
             self.target = target
 
     def guess(self, word: str) -> bool:
+        """Increment game by guessing a word.
+        """
         if not self.wordlist.valid_guess(word):
             return False
 
@@ -118,6 +157,19 @@ class WordleGame():
 
     def add_state(self, guess, state_str: str) -> None:
         """Update game with current state, designed for external play.
+
+        Parameters
+        ----------
+        guess : str, required
+            Guess made for this round.
+
+        state_str : str, required
+            Five digit string reflecting the response to the guess. 
+            'B' - Letter does not exist in target word or if there are repeated letters,
+                  in the guess there are fewer of this letter in the target word.
+            'G' - Letter does exist in target word and is in the right location.
+            'Y' - Letter does exist in target word but is not in the right location.
+            e.g. BBGGY
         """
         self.guesses.append(guess)
 
@@ -136,6 +188,13 @@ class WordleGame():
 
     def complete(self) -> int:
         """Determine if game is complete.
+
+        Returns
+        -------
+        complete : int
+            IN_PROGRESS - game in progress.
+            WIN - player has won by guessing the word.
+            LOSE - player has lost by exceeding maximum guesses.
         """
         if np.all(self.state[self.round - 2, :] == GREEN):
             return WIN
@@ -146,6 +205,8 @@ class WordleGame():
         return IN_PROGRESS 
 
     def __str__(self):
+        """Representation of the game state.
+        """
 
         def transform_char(x: int, input_string) -> str:
             if x == GREY:
