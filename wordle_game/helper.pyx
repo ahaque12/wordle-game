@@ -75,6 +75,20 @@ cpdef generate_state(str target, str word):
 @cython.boundscheck(False) # turn off bounds-checking for entire function
 @cython.wraparound(False)  # turn off negative index wrapping for entire function
 cpdef calculate_counts(np.ndarray[DTYPE_t, ndim=2] state_space, np.ndarray[DTYPE_t, ndim=1] filter_mat):
+    """Calculate counts
+
+    Parameters
+    ----------
+    state_space : np.ndarray, required
+        Mapping of possible answers x acceptable guesses to state. 
+
+    filter_mat : np.ndarray, required
+        1-d array of whether or not the answer is possible.
+    Returns
+    -------
+    counts : np.ndarray
+        Count of potential answers per acceptable guesses x possible states.
+    """
 
     cdef int i
     cdef int j
@@ -95,6 +109,13 @@ cpdef calculate_counts(np.ndarray[DTYPE_t, ndim=2] state_space, np.ndarray[DTYPE
 @cython.boundscheck(False) # turn off bounds-checking for entire function
 @cython.wraparound(False)  # turn off negative index wrapping for entire function
 cpdef calc_entropy(np.ndarray[DTYPE_t, ndim=2] counts):
+    """Calculate entropy given counts.
+
+    Parameters
+    ----------
+    counts : np.ndarray, required
+        Count of potential answers per acceptable guesses x possible states.
+    """
     cdef np.ndarray[DTYPEF_t, ndim=2] px = counts / (.001 + counts.sum(axis=1).reshape(-1, 1))
     cdef np.ndarray[DTYPEF_t, ndim=1] entropy = np.sum(px*np.log2(px + .001), axis=1)
     return entropy

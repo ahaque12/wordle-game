@@ -94,6 +94,11 @@ class WordList():
 
         return True
 
+    def random_target(self) -> str:
+        """Pick random target from list of possible answers.
+        """
+        return self.answers[np.random.randint(len(self.answers))]
+
 
 class WordleGame():
     """Play Wordle game.
