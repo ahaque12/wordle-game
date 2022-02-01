@@ -117,7 +117,18 @@ with st.form("guess_form"):
     # Every form must have a submit button.
     submitted = st.form_submit_button("ENTER")
     if submitted:
-        game.guess(guess)
+        if game.wordlist.valid_guess(guess):
+            game.guess(guess)
+            if game.complete() == wordle.WIN:
+                st.info("You won!")
+                st.balloons()
+                del st.session_state['game']
+            elif game.complete() == wordle.LOSE:
+                st.info("You lost :(")
+                del st.session_state['game']
+        else:
+            st.warning("Invalid guess!")
+
 
 st.write(state_repr(game) + css, unsafe_allow_html=True)
 
