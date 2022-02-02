@@ -1,5 +1,7 @@
 # Wordle Game
 
+**Documentation:** https://ahaque12.github.io/wordle-game
+
 ### 😂 Here is a random joke that'll make you laugh!
 ![Jokes Card](https://readme-jokes.vercel.app/api)
 
