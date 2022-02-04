@@ -1,0 +1,3 @@
+include wordle_game/data/wordle-allowed-guesses.txt
+include wordle_game/data/wordle-answers-alphabetical.txt
+include wordle_game/helper.pyx
