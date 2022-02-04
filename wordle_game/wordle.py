@@ -19,8 +19,8 @@ from collections import Counter
 
 # Number of wordle guesses
 NUM_GUESSES = 6
-ANSWERS_PATH = os.path.join(Path(__file__).parent, '..', 'data/', 'wordle-answers-alphabetical.txt')
-GUESS_PATH = os.path.join(Path(__file__).parent, '..', 'data/', 'wordle-allowed-guesses.txt')
+ANSWERS_PATH = os.path.join(Path(__file__).parent, 'data/', 'wordle-answers-alphabetical.txt')
+GUESS_PATH = os.path.join(Path(__file__).parent, 'data/', 'wordle-allowed-guesses.txt')
 
 EMPTY = -1
 GREY = 0

@@ -8,7 +8,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='wordle-game',
-    version='0.1',
+    version='0.1.1',
     description='Play and solve Wordle games.',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -29,6 +29,7 @@ setup(
     python_requires='>=3.6',
     packages=['wordle_game'],
     package_dir={'wordle_game': 'wordle_game'},
+    include_package_data=True,
     data_files=[('data', ['wordle_game/data/wordle-allowed-guesses.txt',
                           'wordle_game/data/wordle-answers-alphabetical.txt'])],
     entry_points={

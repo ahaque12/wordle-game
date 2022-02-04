@@ -10,7 +10,7 @@ from wordle_game import wordle, helper
 import numpy as np
 from tqdm import tqdm
 
-STATE_PATH = os.path.join(Path(__file__).parent, '..', 'data/', 'state_space.npy')
+STATE_PATH = os.path.join(Path(__file__).parent, 'data/', 'state_space.npy')
 
 
 class BaseSolver():

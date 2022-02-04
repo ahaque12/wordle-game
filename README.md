@@ -16,11 +16,7 @@ Run the makefile `$ make` or download the dictionaries manually.
 
 You can install the package using:
 ```bash
-$ python setup.py install
-```
-or 
-```bash
-$ pip install -e .
+$ pip install .
 ```
 
 ## Playing the game
