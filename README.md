@@ -1,5 +1,7 @@
 # Wordle Game
 
+[![Coverage Status](https://coveralls.io/repos/github/ahaque12/wordle-game/badge.svg?branch=master)](https://coveralls.io/github/ahaque12/wordle-game?branch=master)
+
 **Documentation:** https://ahaque12.github.io/wordle-game
 
 ### 😂 Here is a random joke that'll make you laugh!
