@@ -31,7 +31,6 @@ WIN = 1
 LOSE = 0
 IN_PROGRESS = -1
 
-MAX_GUESSES = 6
 WORD_LEN = 5
 
 
@@ -113,6 +112,9 @@ class WordleGame():
     target : str or None, optional (default=None)
         Target word, if unspecified will be instantiated randomly.
 
+    max_guesses : int, optional (default=6)
+        Max guesses before the game is determined to be lost.
+
     Attributes
     ----------
     wordlist : WordList
@@ -128,6 +130,9 @@ class WordleGame():
 
     round : int
         Current round of the game. The initial round is 1.
+
+    max_guesses : int
+        Max guesses before the game is determined to be lost.
     """
 
     state = None
@@ -136,12 +141,13 @@ class WordleGame():
     round = 1
     guesses = []
 
-    def __init__(self, wordlist: WordList = WordList(), target=None) -> None:
+    def __init__(self, wordlist: WordList = WordList(), target=None, max_guesses: int = 6) -> None:
         self.wordlist = wordlist
-        self.state = np.empty(shape=(MAX_GUESSES, WORD_LEN), dtype=int)
+        self.state = np.empty(shape=(max_guesses, WORD_LEN), dtype=int)
         self.state.fill(EMPTY)
         self.guesses = []
         self.round = 1
+        self.max_guesses = max_guesses
 
         if target is None:
             self.target = wordlist.random_target()
@@ -204,7 +210,7 @@ class WordleGame():
         if np.all(self.state[self.round - 2, :] == GREEN):
             return WIN
 
-        if self.round > MAX_GUESSES:
+        if self.round > self.max_guesses:
             return LOSE
 
         return IN_PROGRESS 
